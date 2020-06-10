@@ -1,8 +1,7 @@
-var start= document.getElementById('startGame');
-var next= document.getElementById('next');
+const startButton= document.getElementById('start-btn');
+const nextButton= document.getElementById('next-btn');
 
 var ul= document.getElementById('ul');
-var btn= document.getElementById('button');
 var scoreCard= document.getElementById('scoreCard');
 var quizBox= document.getElementById('questionBox');
 //answer
@@ -14,10 +13,10 @@ var op4 = document.getElementById('op4');
 let minutesDisplay = document.querySelector("#minutes");
 let secondsDisplay = document.querySelector("#seconds");
 
-startGame.addEventListner("click", start);
-   
 
-var app= {
+startButton.addEventListener('click', StartGame)
+
+var questions= {
         questions:[
         {q:'Inside which HTML element do you put the JavaScript code?',options:['<script>','<javascript>','<js>'
         , 'None of the Above'], answer:1},
@@ -34,8 +33,19 @@ var app= {
     ],
 }
 
+let lastQuestionIndex= question.length - 1;
+let runningQuestionIndex=0;
+index=0;
+
     
-    index= 0,
+    
+    function startGame(){
+        //console.log('started');
+        startButton.classlist.add('hide')
+        startTimer();
+        renderQuestion();
+    }
+    
     function renderQuestions(){
         if(this.index<=this.questions.length-1){
         quizBox.innerHTML=this.index+1+"."+this.question[this.index].q;
@@ -53,7 +63,8 @@ var app= {
         op4.style.display="none";
         btn.style.display="none";
     }
-    },
+    }
+
     function next(){
         this.index++;
         this.renderQuestion();
@@ -115,13 +126,13 @@ var app= {
 window.onload=app.renderQuestions();
 
 function button(ele){
-    app.check(ele);
-    app.notClickAble();
+    questions.check(ele);
+    questions.notClickAble();
 }
 
 function next(){
-    app.next();
-    app.clickAble();
+    questions.next();
+    questions.clickAble();
 }
 
 
