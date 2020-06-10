@@ -1,149 +1,183 @@
-const startButton = document.getElementById('start-btn')
-const nextButton = document.getElementById('next-btn')
-const questionContainerElement = document.getElementById('question-container')
-const questionEl = document.getElementById('question')
-const answerButtonsEl = document.getElementById('answer-buttons')
+// selected all elements
+const startButton= document.getElementById("start-btn");
+const next= document.querySelector("next");
+const quiz= document.getElementById("quiz");
+const questionContainerElement= document.getElementById("question-container");
+const score= document.querySelector("score");
+const scoreCounter= document.querySelector("score Counter")
+const counterTime= document.getElementById("#timer");
 
-let shuffledQuestions, currentQuestionIndex
+const answer1= document.querySelector("#answer1");
+const answer2= document.querySelector("#answer2");
+const answer3= document.querySelector("#answer3");
+const answer4= document.querySelector("#answer4");
 
-startButton.addEventListener('click', startGame)
-nextButton.addEventListener('click', ()=> {
-    currentQuestionIndex++
-    setNextQuestion()
-} )
+const scoreContainer= document.getElementById("scoreContainer");
 
-function startGame() {
-    //console.log('Statred')
-    startButton.classList.add('hide')
-    shuffledQuestions= questions.sort( () => Math.random() - .5)
-    currentQuestionIndex = 0
-    questionContainerElement.classList.remove('hide')
-    setNextQuestion()
+// create some variables
+const lastQuestionIndex= question.length- 1;
+let runningQuestionIndex = 0;
+
+
+startButton.addEventListener("click", startGame);
+
+//start quiz
+function startGame(){
+    console.log('started');
+startTimer();
+startButton.classList.add('hide')
+questionContainerElement.classList.remove('hide')
+renderQuestion();
+quiz.style.display = "block";
+renderCounter();
 }
 
-function setNextQuestion() {
-    resetState()
-    showQuestion(shuffledQuestions[currentQuestionIndex])
+// render a question
+function renderQuestion() {
+    let q = questions[runningQuestionIndex];
+
+    questionInsert.innerHTML= "<p>" + q.question + "<p>";
+    answer1.innerHTML = q.answer1;
+    answer2.innerHTML = q.answer2;
+    answer3.innerHTML = q.answer3;
+    answer4.innerHTML = q.answer4;
+
 }
 
-function showQuestion(question) {
-    questionEl.innerText = question.question
-    question.answer.forEach(answer =>{
-        const button = document.createElement('button')
-        button.innerText = answerText
-        button.classList.add('btn')
-        if (answer.correct) {
-            button.dataset.correct = answer.correct
+//counter render
+const questionTime = 60; //60s
+let count = 60;
+
+function renderCounter(){
+    if(count <= questionTime){
+        counter.innerHTML= count;
+        count++;
+    } else{
+        count= 0;
+        answerIsWrong();
+        if(runningQuestionIndex < lastQuestionIndex){
+            runningQuestionIndex++;
+            questionRender();
+        } else{clearInterval(timer);
+            //end the quiz and show the score
+            scoreRender();
+
         }
-        button.addEventListener('click', selectAnswer)
-        answerButtonsEl.appendChild(button)
-    })
-}
 
-function resetState() {
-    nextButton.classList.add('hide')
-    while (answerButtonsEl.fistChild) {
-        answerButtonsEl.removeChild
-        (answerButtonsEl.firstChild)
-    }  
+    };
 
-}
-
-function selectAnswer(e) {
-    const selectedButton = e.target
-    const correct = selectedButton.dataset.correct
-    setStatusClass(document.body.correct)
-    Array.from(answerButtonsEl.children).forEach(button =>{
-        setStatusClass(button, button.dataset.correct)
-    })
-    if (shuffledQuestions.length > currentQuestionIndex + 1) {
-        nextButton.classList.remove('hide')
-    } else {
-        startButton.innerText = 'Restart'
-        startButton.classList.remove('hide')
-
+    //Check Answers
+    function checkAnswer(answer){
+        if(question[runningQuestionIndex].correct == answer){
+        // answer is correct
+        scoreCounter++;
+        answerIsCorrect();
+    }else{
+        // answer is wrong
+        answerIsWrong();
     }
+    if(runningQuestionIndex < lastQuestionIndex){
+        count = 0;
+        runningQuestionIndex++;
+        questionRender();
+    } else{
+        clearInterval(TIMER);
+        // end the quiz and show the score
     
-}
-
-function setStatusClass(element, correct) {
-    clearStatusClass(element)
-    if (correct) {
-        element.classList.add('correct')
-    } else {
-        element.classList.add('wrong')
     }
 }
-
-function setStatusClass(element) {
-    element.classList.remove('correct')
-    element.classList.remove('wrong')
-    
+// answer is correct
+function answerIsCorrect(){
+    document.getElementById(runningQuestionIndex);
+        alert("Correct")
+}
+// answer is wrong
+function answerIsWrong(){
+    document.getElementById(runningQuestionIndex);
+        alert("Wrong")
 }
 
+next.addEventListener("click", nextQuestion);
+
+// move to next question
+function nextQuestion() {
+runningQuestionIndex++;
+renderQuestion()
+}
+
+// Score render
+function scoreRender(){
+    scoreDiv.style.display= "block";
+
+    //calculate score per questions answered
+    let score= 0;
+    scoreDiv.innerHTML= "<p> + score + </p>";
+}
+ 
+let timer= setInterval(function(){
+    seconds--;
+    document.getElementById("seconds").innerText= seconds % 60;
+    document.getElementById("minutes").innerText= parseInt(seconds / 60);
+
+}, 1000);
+    
+    clearInterval(timer);
+}
+
+
+
+//created questions
 const questions = [
-    {
-        question:"What is Javascript?",
-        answers:[
-            {text:"plumming ", correct:true},
-            {text:"decoration", correct:false},
-            {text:"landscape", correct:false},
-            {text:"framework", correct:false},
-        ]
-    };
-
-    {
-        question:"What is Javascript?",
-        answers:[
-            {text:"plumming ", correct:true},
-            {text:"decoration", correct:false},
-            {text:"landscape", correct:false},
-            {text:"framework", correct:false},
-        ]
-    };
-
-    {
-        question:"What is Javascript?",
-        answers:[
-            {text:"plumming ", correct:true},
-            {text:"decoration", correct:false},
-            {text:"landscape", correct:false},
-            {text:"framework", correct:false},
-        ]
-    };
-
-    {
-        question:"What is Javascript?",
-        answers:[
-            {text:"plumming ", correct:true},
-            {text:"decoration", correct:false},
-            {text:"landscape", correct:false},
-            {text:"framework", correct:false},
-        ]
-    };
-
-    {
-        question:"What is Javascript?",
-        answers:[
-            {text:"plumming ", correct:true},
-            {text:"decoration", correct:false},
-            {text:"landscape", correct:false},
-            {text:"framework", correct:false},
-        ]
-    };
-];
-
-
-// 
-// var score= 0;
-
-// for(var i=0; i<questions.length; i++){
-//     var response= window.prompt(question[i].prompt);
-//         if(response==questio[i].answer){
-//             score++;
-//             alert("correct!");
-//         }else{
-//             alert("wrong!");
-//         }
-// }
-// alert("you got" + score +"/" + questions.length);
+        {
+            question:"Inside which HTML element do you put the JavaScript code?",
+            choiceA:"<script> ",
+            choiceB:"<javascript>",
+            choiceC:"<js>",
+            choiceD:"None of the Above",
+            correct: "A"
+            
+        },
+    
+        {
+            question:"What does CSS stand for?",
+            choiceA:"Computer Style Sheets",
+            choiceB:"Cascading Style Sheets",
+            choiceC:"Colorful Style Sheets",
+            choiceD:"Coordinating Style Sheet",
+            correct: "B"
+            
+        },
+    
+        {
+            question:"What does HTML stand For",
+            choiceA: "Hyper Text Markup Language",
+            choiceB:"Home Tool Markup Language",
+            choiceC:"Hyperlinks and Text Markup Language",
+            choiceD:"Hotspot Text Markup Language",
+            correct: "C"
+            
+        },
+    
+        {
+            question:"What is Javascript?",
+            choiceA:"plumming ",
+            choiceB:"decoration",
+            choiceC:"landscape",
+            choiceD:"framework",
+            correct: "A"
+            
+        },
+    
+        {
+            question:"What is Javascript?",
+            choiceA:"plumming ",
+            choiceB:"decoration",
+            choiceC:"landscape",
+            choiceD:"framework",
+            correct: "A"
+            
+        }
+    ]
+// var highscore= recentScore;
+// const recentScore= localStorage.getItem("recentScore");
+// localStorage.setItem("recentScore", scoreCount)
