@@ -14,7 +14,7 @@ let minutesDisplay = document.querySelector("#minutes");
 let secondsDisplay = document.querySelector("#seconds");
 
 
-startButton.addEventListener('click', StartGame)
+startButton.addEventListener('click', startGame)
 
 var questions= {
         questions:[
@@ -33,7 +33,7 @@ var questions= {
     ],
 }
 
-let lastQuestionIndex= question.length - 1;
+let lastQuestionIndex= questions.length - 1;
 let runningQuestionIndex=0;
 index=0;
 
@@ -41,7 +41,7 @@ index=0;
     
     function startGame(){
         //console.log('started');
-        startButton.classlist.add('hide')
+        //startButton.classlist.add('hide')
         startTimer();
         renderQuestion();
     }
@@ -54,8 +54,7 @@ index=0;
         op3.innerHTML=this.questions[this.index].options[2];
         op4.innerHTML=this.questions[this.index].options[3];
         this.scoreCard();
-    }
-    else{
+    } else{
         quizBox.innerHTML="Quiz Over......!!!";
         op1.style.display="none";
         op2.style.display="none";
@@ -64,6 +63,8 @@ index=0;
         btn.style.display="none";
     }
     }
+
+    nextButton.addEventListener('click', next)
 
     function next(){
         this.index++;
@@ -108,7 +109,7 @@ index=0;
         scoreCard.innerHTML=this.questions.length+"/"+this.score;
     }
 
-    function startTime() {
+    function startTimer() {
         var today = new Date();
         var m = today.getMinutes();
         var s = today.getSeconds();
@@ -116,14 +117,14 @@ index=0;
         s = checkTime(s);
         document.getElementById('timer').innerHTML =
         m + ":" + s;
-        var t = setTimeout(startTime, 1000);
+        var t = setTimeout(startTimer, 1000);
       }
       function checkTime(i) {
         if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
         return i;
       }
 
-window.onload=app.renderQuestions();
+//window.onload=startGame.renderQuestions();
 
 function button(ele){
     questions.check(ele);
