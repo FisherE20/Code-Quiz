@@ -83,9 +83,25 @@ h1{
     padding: 25px 0px;
 }
 
+.quiz_wrapper .score .start{
+    width: 40%;
+    float: left;
+}
+
 .quiz_wrapper .score .next{
     width: 40%;
     float: left;
+}
+
+.quiz_wrapper .score .start button{
+    padding: 15px 70px;
+    color: white;
+    background-color:#bb8bb4;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0px 3px 0px#9e8957 ;
+    outline: none;
 }
 
 .quiz_wrapper .score .next button{
@@ -111,7 +127,7 @@ h1{
 .quiz_wrapper .score .score-card{
     font-size: 20px;
     color: black;
-    line-height: 50px;
+    line-height: 80px;
     text-transform: uppercase;
 }
 
@@ -125,6 +141,6 @@ h1{
     .quiz_wrapper .score .score-sheet{
         font-size: 20px;
         color: black;
-        line-height: 50px;
+        line-height: 80px;
         float: right;
 }
