@@ -1,183 +1,132 @@
-// selected all elements
-const startButton= document.getElementById("start-btn");
-const next= document.querySelector("next");
-const quiz= document.getElementById("quiz");
-const questionContainerElement= document.getElementById("question-container");
-const score= document.querySelector("score");
-const scoreCounter= document.querySelector("score Counter")
-const counterTime= document.getElementById("#timer");
+var ul= document.getElementById('ul');
+var btn= document.getElementById('button');
+var scoreCard= document.getElementById('scoreCard');
+var quizBox= document.getElementById('questionBox');
+var op1 = document.getElementById('op1');
+var op2 = document.getElementById('op2');
+var op3 = document.getElementById('op3');
+var op4 = document.getElementById('op4')
 
-const answer1= document.querySelector("#answer1");
-const answer2= document.querySelector("#answer2");
-const answer3= document.querySelector("#answer3");
-const answer4= document.querySelector("#answer4");
+    var app= {
+        questions:[
+        {q:'Inside which HTML element do you put the JavaScript code?',options:['<script>','<javascript>','<js>'
+        , 'None of the Above'], answer:1},
 
-const scoreContainer= document.getElementById("scoreContainer");
+        {q:"What does CSS stand for?",options:["Computer Style Sheets","Cascading Style Sheets","Colorful Style Sheets"
+        , "Coordinating Style Sheet"], answer:2},
 
-// create some variables
-const lastQuestionIndex= question.length- 1;
-let runningQuestionIndex = 0;
+        {q:"What does HTML stand For",options:["What does HTML stand For","Home Tool Markup Language","Hyperlinks and Text Markup Language"
+        , "Hotspot Text Markup Language"], answer:3},
 
+        {q:'HTML stands for?',options:['answer 1','answer 2','answer 3'
+        , 'answer 4'], answer:1},
 
-startButton.addEventListener("click", startGame);
-
-//start quiz
-function startGame(){
-    console.log('started');
-startTimer();
-startButton.classList.add('hide')
-questionContainerElement.classList.remove('hide')
-renderQuestion();
-quiz.style.display = "block";
-renderCounter();
+    ],
 }
 
-// render a question
-function renderQuestion() {
-    let q = questions[runningQuestionIndex];
-
-    questionInsert.innerHTML= "<p>" + q.question + "<p>";
-    answer1.innerHTML = q.answer1;
-    answer2.innerHTML = q.answer2;
-    answer3.innerHTML = q.answer3;
-    answer4.innerHTML = q.answer4;
-
-}
-
-//counter render
-const questionTime = 60; //60s
-let count = 60;
-
-function renderCounter(){
-    if(count <= questionTime){
-        counter.innerHTML= count;
-        count++;
-    } else{
-        count= 0;
-        answerIsWrong();
-        if(runningQuestionIndex < lastQuestionIndex){
-            runningQuestionIndex++;
-            questionRender();
-        } else{clearInterval(timer);
-            //end the quiz and show the score
-            scoreRender();
-
-        }
-
-    };
-
-    //Check Answers
-    function checkAnswer(answer){
-        if(question[runningQuestionIndex].correct == answer){
-        // answer is correct
-        scoreCounter++;
-        answerIsCorrect();
-    }else{
-        // answer is wrong
-        answerIsWrong();
+    
+    index= 0,
+    function renderQuestions(){
+        if(this.index<=this.questions.length-1){
+        quizBox.innerHTML=this.index+1+"."+this.question[this.index].q;
+        op1.innerHTML=this.questions[this.index].options[0];
+        op2.innerHTML=this.questions[this.index].options[1];
+        op3.innerHTML=this.questions[this.index].options[2];
+        op4.innerHTML=this.questions[this.index].options[3];
+        this.scoreCard();
     }
-    if(runningQuestionIndex < lastQuestionIndex){
-        count = 0;
-        runningQuestionIndex++;
-        questionRender();
-    } else{
-        clearInterval(TIMER);
-        // end the quiz and show the score
+    else{
+        quizBox.innerHTML="Quiz Over......!!!";
+        op1.style.display="none";
+        op2.style.display="none";
+        op3.style.display="none";
+        op4.style.display="none";
+        btn.style.display="none";
+    }
+    },
+    function next(){
+        this.index++;
+        this.renderQuestion();
+
+    }
+    function checkAnswer(ele){
+            var id=ele.id.split('');
+            //console.log(id);
+            if(id[id.length-1]==this.questions[this.index].answer){
+               // console.log("Correct")
+               this.score++;
+               ele.className="correct";
+               ele.innerHTML="Correct";
+               this.scoreCard();
+            } else{
+                //console.log("Not")
+                ele.className="wrong";
+                ele.innerHTML="Wrong";
+            }
+    }
+    function notClickAble(){
+        frameElement(let i=0; i<ul.children.length; i++){
+            ul.children[i].style.pointerEvents="none";
+        }
+    }
+
+    function clickAble(){
+        frameElement(let i=0; i<ul.children.length; i++){
+            ul.children[i].style.pointerEvents="auto";
+            ul.children[i].style.className="";
+        }
+    }
+
+    function notClickAble(){
+
+    }
+    score= 0,
+    function scoreCard(){
+        scoreCard.innerHTML=this.questions.length+"/"+this.score;
+    }
+    
+    //Set the date we're counting down to
+    var countDownDate= newDate("60:00").getTime();
+
+    //Update the count down every 1 second
+    let timer= setInterval(function(){
+        seconds--;
+        
+        //Get time
+        var now= newDate().getTime();
+
+        //find distance between now and the count down date
+        var distance= countDownDate - now;
+        
+        //Time calculations for minutes and seconds.
+        var minutes=Math.floor((distance % 1000 * 60* 60))/ (1000 * 60));
+        var seconds = Math.floor((distane % (1000 * 60)) / 1000);
+
+        //Output the result in an element with id=""
+        document.getElementById("time").innerHTML= minutes + "m" + seconds + "s";
+
+        // If count down is over, Write some text
+        if(distance < 0){
+            clearInterval(timer);
+        
+
+        document.getElementById("seconds").innerText= seconds % 60;
+        document.getElementById("minutes").innerText= parseInt(seconds / 60);
+        }, 1000);
+        
     
     }
-}
-// answer is correct
-function answerIsCorrect(){
-    document.getElementById(runningQuestionIndex);
-        alert("Correct")
-}
-// answer is wrong
-function answerIsWrong(){
-    document.getElementById(runningQuestionIndex);
-        alert("Wrong")
+
+window.onload=app.renderQuestions();
+
+function button(ele){
+    app.check(ele);
+    app.notClickAble();
 }
 
-next.addEventListener("click", nextQuestion);
-
-// move to next question
-function nextQuestion() {
-runningQuestionIndex++;
-renderQuestion()
-}
-
-// Score render
-function scoreRender(){
-    scoreDiv.style.display= "block";
-
-    //calculate score per questions answered
-    let score= 0;
-    scoreDiv.innerHTML= "<p> + score + </p>";
-}
- 
-let timer= setInterval(function(){
-    seconds--;
-    document.getElementById("seconds").innerText= seconds % 60;
-    document.getElementById("minutes").innerText= parseInt(seconds / 60);
-
-}, 1000);
-    
-    clearInterval(timer);
+function next(){
+    app.next();
+    app.clickAble();
 }
 
 
-
-//created questions
-const questions = [
-        {
-            question:"Inside which HTML element do you put the JavaScript code?",
-            choiceA:"<script> ",
-            choiceB:"<javascript>",
-            choiceC:"<js>",
-            choiceD:"None of the Above",
-            correct: "A"
-            
-        },
-    
-        {
-            question:"What does CSS stand for?",
-            choiceA:"Computer Style Sheets",
-            choiceB:"Cascading Style Sheets",
-            choiceC:"Colorful Style Sheets",
-            choiceD:"Coordinating Style Sheet",
-            correct: "B"
-            
-        },
-    
-        {
-            question:"What does HTML stand For",
-            choiceA: "Hyper Text Markup Language",
-            choiceB:"Home Tool Markup Language",
-            choiceC:"Hyperlinks and Text Markup Language",
-            choiceD:"Hotspot Text Markup Language",
-            correct: "C"
-            
-        },
-    
-        {
-            question:"What is Javascript?",
-            choiceA:"plumming ",
-            choiceB:"decoration",
-            choiceC:"landscape",
-            choiceD:"framework",
-            correct: "A"
-            
-        },
-    
-        {
-            question:"What is Javascript?",
-            choiceA:"plumming ",
-            choiceB:"decoration",
-            choiceC:"landscape",
-            choiceD:"framework",
-            correct: "A"
-            
-        }
-    ]
-// var highscore= recentScore;
-// const recentScore= localStorage.getItem("recentScore");
-// localStorage.setItem("recentScore", scoreCount)
