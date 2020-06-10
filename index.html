@@ -25,16 +25,24 @@
         </div>
         <div class="score">
             <div class="start">
-                <button type="button" onclick="start()" id="button">Start</button>
+                <button type="button" class="btn btn-primary" onclick="startgame()" id="start">Start</button>
             </div>
             <div class="next">
-                <button type="button" onclick="next()" id="button">Next</button>
+                <button type="button" class="btn btn-primary" onclick="next()" id="button">Next</button>
             </div>
             <div class="score-card">
                 Score : <span id="scorecard">0</span>
             </div>
-            <div class="score-sheet">
-                Time : <span id="timer">0:0</span>
+            <div class="score-sheet"><div>
+            <div id="timer" class="hide">Time:<span id="timer"></span>
+                <div class="time">
+                  <div id="minutes">5</div>
+                  <div id="seconds">00</div>
+                </div>
+                
+            <div id="highscore" class="hide">
+
+            </div>
             </div>
         </div>
 

@@ -1,13 +1,23 @@
+var start= document.getElementById('startGame');
+var next= document.getElementById('next');
+
 var ul= document.getElementById('ul');
 var btn= document.getElementById('button');
 var scoreCard= document.getElementById('scoreCard');
 var quizBox= document.getElementById('questionBox');
+//answer
 var op1 = document.getElementById('op1');
 var op2 = document.getElementById('op2');
 var op3 = document.getElementById('op3');
-var op4 = document.getElementById('op4')
+var op4 = document.getElementById('op4');
+//timer 
+let minutesDisplay = document.querySelector("#minutes");
+let secondsDisplay = document.querySelector("#seconds");
 
-    var app= {
+startGame.addEventListner("click", start);
+   
+
+var app= {
         questions:[
         {q:'Inside which HTML element do you put the JavaScript code?',options:['<script>','<javascript>','<js>'
         , 'None of the Above'], answer:1},
@@ -65,13 +75,15 @@ var op4 = document.getElementById('op4')
             }
     }
     function notClickAble(){
-        frameElement(let i=0; i<ul.children.length; i++){
+        var frameElement;
+        for(let i=0; i<ul.children.length; i++){
             ul.children[i].style.pointerEvents="none";
         }
     }
 
     function clickAble(){
-        frameElement(let i=0; i<ul.children.length; i++){
+        var frameElement;
+        for(i=0; i<ul.children.length; i++){
             ul.children[i].style.pointerEvents="auto";
             ul.children[i].style.className="";
         }
@@ -84,38 +96,21 @@ var op4 = document.getElementById('op4')
     function scoreCard(){
         scoreCard.innerHTML=this.questions.length+"/"+this.score;
     }
-    
-    //Set the date we're counting down to
-    var countDownDate= newDate("60:00").getTime();
 
-    //Update the count down every 1 second
-    let timer= setInterval(function(){
-        seconds--;
-        
-        //Get time
-        var now= newDate().getTime();
-
-        //find distance between now and the count down date
-        var distance= countDownDate - now;
-        
-        //Time calculations for minutes and seconds.
-        var minutes=Math.floor((distance % 1000 * 60* 60))/ (1000 * 60));
-        var seconds = Math.floor((distane % (1000 * 60)) / 1000);
-
-        //Output the result in an element with id=""
-        document.getElementById("time").innerHTML= minutes + "m" + seconds + "s";
-
-        // If count down is over, Write some text
-        if(distance < 0){
-            clearInterval(timer);
-        
-
-        document.getElementById("seconds").innerText= seconds % 60;
-        document.getElementById("minutes").innerText= parseInt(seconds / 60);
-        }, 1000);
-        
-    
-    }
+    function startTime() {
+        var today = new Date();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        document.getElementById('timer').innerHTML =
+        m + ":" + s;
+        var t = setTimeout(startTime, 1000);
+      }
+      function checkTime(i) {
+        if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+        return i;
+      }
 
 window.onload=app.renderQuestions();
 
