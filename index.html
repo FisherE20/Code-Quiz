@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Code Quiz</title>
 </head>
+
 <body>
 
     <h1>Code Quiz</h1>
 
     <div class="quiz_wrapper">
         <div class="question" id="questionBox">
-            
+
         </div>
 
         <div class="options">
@@ -23,6 +25,11 @@
                 <li id="op4" onclick="button(this)"></li>
             </ul>
         </div>
+        <form>
+            <label for="player" id="playername" class="hide">Enter Name</label>
+            <input type="text" name="player" id="playername" class="hide"></input>
+            <button id="submit-btn" class="hide">submit</button>
+        </form>
         <div class="score">
             <div class="start">
                 <button id="start-btn" class="start-btn btn">Start</button>
@@ -33,20 +40,19 @@
             <div class="score-card">
                 Score : <span id="scorecard">0</span>
             </div>
-            <div class="score-sheet"><div>
-            <div id="timer" class="hide">Time:<span id="timer"></span>
-                <div class="time">
-                  <div id="minutes">5</div>
-                  <div id="seconds">00</div>
+            <div class="score-sheet">
+                <div>
+                    <div id="timer" class="watch">Time:<span id="timer"></span>
+                    </div>
+
+                    <div id="highscore" class="hide">
+
+                    </div>
                 </div>
-                
-            <div id="highscore" class="hide">
+            </div>
 
-            </div>
-            </div>
         </div>
-
-    </div>
-    <script src="script.js"></script>
+        <script src="script.js"></script>
 </body>
+
 </html>
